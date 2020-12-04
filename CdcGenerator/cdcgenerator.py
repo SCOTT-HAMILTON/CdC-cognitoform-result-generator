@@ -7,9 +7,12 @@ import pkg_resources
 from CdcGenerator.fields import fields
 
 class CdCGenerator():
-    def __init__(self, debug):
+    def __init__(self, debug, stats=False, answers=True):
         self.debug = debug
-        self.fields_alias = fields["2020-2021"]
+        self.stats = stats
+        self.answers = answers
+
+        self.fields_alias = fields["2020-2021-1"]
         self.PiChart_header = """
 \\\\captionsetup[subfigure]{labelformat=empty, font={bf}}
 \\\\captionsetup[figure]{labelformat=empty, font={bf}}
@@ -67,7 +70,7 @@ class CdCGenerator():
             percentage = n/EntryCount*100.0
             text += self.makePiChart(alias, percentage, n)
         text += self.PiChart_footer
-
+        text += "\n\\\\pagebreak\n"
         for key,values in BarChart_stats.items():
             text += self.makePiChart2(values, key)
         return text
@@ -112,6 +115,15 @@ class CdCGenerator():
 
         return (data, YesNoFields_stats, BarChart_stats)
 
+    def clean_names_case(self, data):
+        columns = ['PeuxtuNousDonnerTonNom_First', 'PeuxtuNousDonnerTonNom_Last']
+        data[columns] = data[columns].apply(
+                lambda n:
+                    n.apply(
+                        lambda t: t[0].upper()+t[1:].lower())
+                   , axis='columns')
+        return data
+
     def generateLatexPdf(self, input_entry_excel):
 
         YesNoFields_stats = {}
@@ -119,20 +131,23 @@ class CdCGenerator():
         EntryCount = 0
 
         data = pd.read_excel(input_entry_excel)
-
+        data = self.clean_names_case(data)
         data = data.sort_values(by='PeuxtuNousDonnerTonNom_Last')
         EntryCount = len(data)-1
         text = ""
+        final_text = ""
         for row in data.iterrows():
             extracted_text,YesNoFields_stats,BarChart_stats = self.extract_values(row[1], YesNoFields_stats, BarChart_stats)
             text += extracted_text
 
-        text = self.makeCharts(YesNoFields_stats, BarChart_stats, EntryCount)+"""
+        if self.stats:
+            final_text = self.makeCharts(YesNoFields_stats, BarChart_stats, EntryCount)+"""
 
 \\\\pagebreak
 
-
-\\\\section{Les réponses ("""+str(EntryCount)+""")}\n"""+text
+"""
+        if self.answers:
+            final_text += """\\\\section{Les réponses ("""+str(EntryCount)+""")}\n"""+text
 
         TEMPLATE_PATH = pkg_resources.resource_filename('CdcGenerator', 'data/template_latex.tex')
         if self.debug:
@@ -141,5 +156,5 @@ class CdCGenerator():
         with open(TEMPLATE_PATH) as template:
             lines = ''.join(template.readlines())
 
-        print(re.sub('<data>', text, lines))
+        print(re.sub('<data>', final_text, lines))
 

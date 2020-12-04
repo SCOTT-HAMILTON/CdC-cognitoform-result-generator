@@ -29,7 +29,7 @@ fields = {
     "Entry_DateSubmitted": None,
     "Entry_DateUpdated": None,
     }
-, "2020-2021" :
+, "2020-2021-1" :
     {
     "QuestionnairePourPréparerLeCons_Id": None,
     "PeuxtuNousDonnerTonNom_First": "Prénom : ",
@@ -38,15 +38,15 @@ fields = {
     "PeuxtuDécrireCeQuiTeDéplaitDansCetteAmbianceDeClasse": "Ce qui te déplait dans cette ambiance ?",
     "RencontrestuDesProblèmesDansCertainesMatières": "YES-NO-Rencontre des problèmes dans certaines matières ?",
     "DansQuellesMatières": "CHART-Matières posant le plus de problèmes-Dans quelle matière ?",
-    "QuellesMatières": "CHART-Matières autre posant le plus de problèmes-Dans quelle autre matière ?",
-    "DansQuellesSpécialitéss": "CHART-Spécialités posant le plus de problèmes-Dans quelle spécialité ?",
+    "QuellesMatières": "Dans quelle autre matière ?",
+    "DansQuellesSpécialitéss": "Difficultés dans quelle spécialité ?",
     "PeuxtuDécrireTontesProblèmesAvecCesMatières": "Problèmes matières : ",
-    "DansQuellesOptions": "CHART-Options posant le plus de problèmes-Problèmes option : ",
+    "DansQuellesOptions": "Problèmes option : ",
     "RencontrestuDesFacilitéesDansCertainesMatières": "YES-NO-A des facilités dans certaines matières ?",
-    "DansQuellesMatières2": "CHART-Matières dites les plus faciles-Matière facilités : ",
-    "QuellesMatières2": "CHART-Matières autre dites les plus faciles-Dans quelle autre matière ?",
+    "DansQuellesMatières2": "CHART-Matières dites plus faciles-Matière facilités : ",
+    "QuellesMatières2": "Facilité autre matièrew : ",
     "DansQuellesOptions2": "Options facilités : ",
-    "DansQuellesSpécialitéss2": "CHART-Spécialités dites les plus faciles-Dans quelle spécialité ?",
+    "DansQuellesSpécialitéss2": "Facilités dans quelle spécialité ?",
     "PeuxtuDécrireCettecesFacilités": "Facilités",
     "AstuUneDemandeÀNousFaireLorsqueTonCasSeraÉtudiéAuConseilDeClasse": "YES-NO-A une demande à faire au CdC ?",
     "QuelleEstCetteDemande": "Demande Conseil de classe : ",
