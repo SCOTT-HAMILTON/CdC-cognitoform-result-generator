@@ -45,7 +45,7 @@ class CdCGenerator():
         text += self.PiChart_header
         text +="""
 \\\\centering
-\\\\caption{"""+alias+""" ("""+str(total)+""")}
+\\\\caption{"""+alias+"""}
 \\\\begin{tikzpicture}
 \\\\pie[explode=0.3, radius=4]{"""
         for value,count in data.items():
@@ -66,6 +66,7 @@ class CdCGenerator():
     def makeCharts(self, YesNoFields_stats, BarChart_stats, EntryCount):
         text = "\\\\section{Quelques statistiques}"
         text += self.PiChart_header
+        print(YesNoFields_stats.items())
         for key, (alias, n) in YesNoFields_stats.items():
             percentage = n/EntryCount*100.0
             text += self.makePiChart(alias, percentage, n)
@@ -87,7 +88,7 @@ class CdCGenerator():
                 alias = tab[1]
                 value = row[field]
                 if not field in YesNoFields_stats:
-                    YesNoFields_stats[field] = (alias, 0)
+                    YesNoFields_stats[field] = (alias, 1)
                 elif value == "Oui":
                     alias,n = YesNoFields_stats[field]
                     n+=1
@@ -133,7 +134,7 @@ class CdCGenerator():
         data = pd.read_excel(input_entry_excel)
         data = self.clean_names_case(data)
         data = data.sort_values(by='PeuxtuNousDonnerTonNom_Last')
-        EntryCount = len(data)-1
+        EntryCount = len(data)
         text = ""
         final_text = ""
         for row in data.iterrows():
